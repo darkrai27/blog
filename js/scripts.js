@@ -91,7 +91,7 @@
   /* Article metadata for read-more sections */
   var ARTICLES = [
     {
-      url: 'articles/LVR-bypass.html',
+      url: 'LVR-bypass.html',
       date: '12 Jul 2026',
       category: 'Bots',
       titleEs: 'Evitando Akamai 403 rate limits en la mayor boutique de Italia',
@@ -100,7 +100,7 @@
       descEn: 'Analyzing techniques to bypass Akamai rate limits on LVR, Italy\'s largest luxury boutique, by exploiting an unprotected gift-sending endpoint.'
     },
     {
-      url: 'articles/sneaker-bot.html',
+      url: 'sneaker-bot.html',
       date: '16 May 2026',
       category: 'Bots',
       titleEs: 'Revolucionando la industria del "sneaker botting".',
@@ -109,7 +109,7 @@
       descEn: 'Analyzing the strategies and techniques for building a successful product and its evolution.'
     },
     {
-      url: 'articles/PX-bypass.html',
+      url: 'PX-bypass.html',
       date: '12 may 2026',
       category: 'WAF',
       titleEs: 'Eludiendo Perimeter-X y su "Press & Hold" Captcha',
@@ -131,8 +131,8 @@
       html += '<article class="log-row">' +
         '<span class="meta num">' + shortDate + '</span>' +
         '<div>' +
-        '<a href="' + a.url + '"><h3 class="lang-es">' + a.titleEs + '</h3></a>' +
-        '<a href="' + a.url + '"><h3 class="lang-en">' + a.titleEn + '</h3></a>' +
+        '<a href="articles/' + a.url + '"><h3 class="lang-es">' + a.titleEs + '</h3></a>' +
+        '<a href="articles/' + a.url + '"><h3 class="lang-en">' + a.titleEn + '</h3></a>' +
         '<p class="lang-es" style="margin: 4px 0 0; color: var(--muted); font-size: 14px;">' + a.descEs + '</p>' +
         '<p class="lang-en" style="margin: 4px 0 0; color: var(--muted); font-size: 14px;">' + a.descEn + '</p>' +
         '</div>' +
