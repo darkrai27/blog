@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Evitando Akamai 403 rate limits en la mayor boutique de Italia · Jorge Marin</title>
+  <meta name="description" content="Cómo evité los rate limits de Akamai en la mayor boutique de lujo de Italia." />
+  <link rel="stylesheet" href="../css/styles.css" />
+  <script>
+    (function () {
+      try {
+        var theme = localStorage.getItem('reverse-log-theme');
+        if (!theme) theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        if (theme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+        var lang = localStorage.getItem('reverse-log-lang') || 'es';
+        document.documentElement.setAttribute('data-lang', lang);
+      } catch (e) {}
+    })();
+  </script>
+</head>
+<body>
+  <header class="topnav" data-od-id="topnav">
+    <div class="container topnav-inner">
+      <a href="../index.html" class="logo">Jorge Marin</a>
+      <nav>
+        <a href="../index.html">
+          <span class="lang-inline lang-es">Artículos</span>
+          <span class="lang-inline lang-en">Articles</span>
+        </a>
+      </nav>
+      <div class="topnav-tools">
+        <button class="tool-btn" id="theme-toggle" aria-pressed="false" aria-label="Cambiar a modo oscuro / Switch to dark mode">
+          <span class="lang-inline lang-es">Oscuro</span>
+          <span class="lang-inline lang-en">Dark</span>
+        </button>
+        <button class="tool-btn" id="lang-toggle" aria-label="Switch to English">
+          <span class="lang-inline lang-es">EN</span>
+          <span class="lang-inline lang-en">ES</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="content">
+    <section class="section article-header" data-od-id="article-header">
+      <div class="container-narrow">
+        <p class="eyebrow">
+          <span class="lang-inline lang-es">Bots · Reverse Engineering</span>
+          <span class="lang-inline lang-en">Bots · Reverse Engineering</span>
+        </p>
+        <h1 class="lang-es">Evitando Akamai 403 rate limits en la mayor boutique de Italia</h1>
+        <h1 class="lang-en">Bypassing Akamai 403 rate limits in the largest online Italian boutique</h1>
+        <div class="article-meta">
+          <span class="num">12 Jul 2026</span>
+          <span class="sep">·</span>
+          <span class="lang-inline lang-es">12 min de lectura</span>
+          <span class="lang-inline lang-en">12 min read</span>
+          <span class="sep">·</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section flush" data-od-id="article-body">
+      <div class="container-narrow">
+        <article class="post-content">
+          <div class="lang-es">
+            <p class="lead">Akamai es otra de las empresas más conocidas en el ámbito de ciberseguridad en internet, ofreciendo soluciones de cloud computing, CDN y seguridad.
+              Sus soluciones de seguridad para frenar el tráfico automatizado se basan en código JavaScript que es ejecutado en el navegador del cliente para analizar sus inputs 
+              y determinar si se trata de un humano o no, todo esto sin que el usuario medio sea capaz de identificarlo.
+            </p>
+
+            <p> 
+              Sin embargo, las soluciones de Akamai, en concreto su desafío "sensor" resulta altamente efectivo, y ha continuado evolucionando en los últimos 5 años, mejorando su
+              detección gracias al análisis de datos avanzados y el Machine Learning, consiguiendo frenar el tráfico de bots y mantener las webs que protege activas incluso con
+              grandes picos de tráfico.
+            </p>
+
+            <p>
+              Como hemos dicho, si Akamai sirve un desafío que se resuelve en el navegador para determinar si el visitante es o no un bot, cómo afecta esto a un bot basado en
+              requests HTTP embedido en un navegador real?
+            </p>
+            <p>
+              A pesar de la naturaleza de un bot así, Akamai es capaz de distinguir cuando el tráfico está siendo parcialmente automatizado, y sobre todo, imponer rate-limits
+              para neutralizar los ataques DDOS. Es normal pensar que una limitación así puede ser fácil de evitar simplemente rotando los proxies con los que se realizan las
+              requests al servidor, pero las soluciones a los desafíos de Akamai van ligadas a la sesión e IP, por tanto un simple cambio de proxy requiere iniciar todo el proceso
+              desde cero.
+            </p>
+
+            <h2>LVR: La mayor boutique de lujo Italiana</h2>
+            <p>
+              LuisaViaRoma, más conocida como LVR, era la mayor boutique de moda de lujo Italiana que contaba con lanzamientos de primer nivel de zapatillas limitadas y ropa streetwear
+              entre 2021 y 2023, recibiendo muchos de los lanzamientos más exclusivos de Nike, Adidas, Off-White, New Balance, entre otros.
+              Todos estos lanzamientos siempre de manera first come first served, a una hora aleatoria en el día de lanzamiento, y con envío a domicilio en toda Europa.
+            </p>
+            
+            <p>
+              Para asegurar la operatividad de la web y que todos sus usuarios contaran con una oportunidad justa para hacerse con los lanzamientos, LVR implementaba las soluciones de Akamai
+              previamente descritas, pero no lo hacía en toda la web, únicamente en sus endpoints relacionados con el checkout: añadir a la cesta, confirmar detalles de compra y enviar el pago.
+              Además, estos endpoints solían recibir una alta cantidad de tráfico en los momentos de lanzamiento, lo que hacía que la protección de Akamai fuera aún más estricta y efectiva,
+              ya que para lograr un único checkout exitoso, era necesario que los endpoints respondieran adecuadamente a cada request antes de que Akamai impusiera un rate-limit y bloqueara el acceso a la web.
+            </p>
+
+            <h2>La importancia de escanear toda la superficie de ataque</h2>
+            <p>
+              Aunque todos los endpoints relacionados con el checkout parecían estar protegidos por Akamai, la web ofrecía la posibilidad de enviar regalos a otros clientes por mail.
+              Una vez que se introducía el mail del destinatario, la web enviaba un mail con un enlace para que el destinatario pudiera aceptar el regalo y el emisor recibía un nuevo email con un enlace para confirmar el pago y el envío del regalo.
+              Una característica que parecía inofensiva, pero que en realidad ofrecía un endpoint de checkout alternativo que no estaba protegido por Akamai. 
+              Analizando el flujo de requests, la información que se enviaba a este endpoint, las respuestas recibidas y los enlaces en los emails que se enviaban, era posible automatizar el proceso de checkout 
+              sin necesidad de recibir los emails, ya que todos los tokens que formaban los enlaces de los emails se podían obtener a través de las respuestas HTTP del endpoint de envío de regalos.
+              Y lo más importante, este endpoint no estaba protegido por Akamai ni recibía tanto tráfico en momentos de estrés de la web, por lo que suponía una ventaja competitiva,
+              ya que era posible realizar checkouts automatizados sin recibir rate-limits ni bloqueos de IP y el servidor respondía correctamente a todas las requests, permitiendo que los usuarios de mi bot se hicieran con gran parte del stock disponible en los lanzamientos.
+            </p>
+            
+            <p>
+              El siguiente code snippet muestra cómo se podía obtener el token de checkout a través de la respuesta HTTP del endpoint de envío de regalos y realizar el checkout sin necesidad de recibir los emails:
+            </p>
+
+            <img src="../img/carbon-lvr.svg" alt="Diagrama del flujo de bypass de LVR" loading="lazy" />
+
+
+            <p> 
+              Este bypass estuvo activo durante casi 3 meses, desde Julio hasta Octubre de 2021, época durante la cuál yo y los usuarios de mi bot fuimos
+              capaces de cosechar gran éxito durante los lanzamientos en la web de LuisaViaRoma, pero el rumor acerca de este bypass pronto se extendió,
+              principalmente debido a los emails informando de los pedidos regalos que los usuarios recibían y
+              otros desarrolladores no tardaron en copiar el método, haciendo que el bypass fuese parcialmente parcheado.
+            </p>
+
+            
+            <h2>Encontrando un nuevo bypass</h2>
+            <p>
+              Tras el éxito cosechado por mis usuarios (y otros competidores que copiaron este método), LuisaViaroma no tardó en responder, bloqueando el 
+              envío de regalos de novedades y productos exclusivos. Sin embargo, lo que en un principio pudo parecer una desventaja, pronto se convirtió 
+              en una oportunidad.
+            </p>
+
+            <p>
+              No tardé en darme cuenta de que de igual forma que se podían seguir generando regalos en ciertos productos,
+              también era posible generar regalos con artículos de colecciones pasadas, enviar todos los detalles del checkout,
+              y en la última request, la que confirma el pedido en el endpoint "/myarea/bag/sendagiftconfirmloggeduserandcreateorder",
+              usar el token del regalo generado, con los detalles del producto limitado que el usuario realmente quería.
+            </p>
+
+            <p>
+              El resto fue fácil, hardcodear un par de decenas de PIDs (product IDs) de colecciones pasadas en el código del bot, para
+              asegurarme de que siempre hubiese alguno en stock que permitiese generar el regalo, y hacer que el bot enviase los pedidos
+              con el PID real.
+            </p>
+
+            <p>
+              Este nuevo método, hasta dónde yo sé, nunca fue encontrado por otros desarrolladores en los casi 2 meses que estuvo
+              activo hasta que los administradores de LVR desactivaron el envío de regalos completamente.
+            </p>
+
+            <h2>Un gran módulo junto bypasses efectivos: éxito asegurado</h2>
+
+            <p>
+              Durante los meses que estos dos bypasses estuvieron activos, especialmente el segundo que nunca fue copiado, 
+              mis usuarios cosecharon gran éxito en todos los lanzamientos y restocks de LVR.
+              Gracias a las capacidades del módulo para monitorizar restocks junto con otro bypass para evitar la caché del stock
+              disponible, y el bypass de Akamai en el checkout, mis usuarios lograron hacerse con más del 90% del stock en lanzamientos muy
+              limitados, incluyendo restocks de varios modelos de Jordan 1 Low, Mid y High, Adidas Yeezy Slide y Foam Runner u otras 
+              colaboraciones de Nike con Ambush, Off-White, etc.
+            </p>
+           
+            
+
+            <h2>Lo que aprendí</h2>
+            <p>
+              En un entorno que evoluciona tan rápido, donde la competencia es tan grande, es importante observar todo al detalle,
+              no asumir nada. Además, es importante comprender como y por qué funcionan los sistemas de seguridad, y no solo cómo eludirlos.
+              Gracias a esto, es posible adaptarse y encontrar soluciones que otros no ven, y que pueden marcar la diferencia entre el éxito y el fracaso.
+            </p>
+
+            <blockquote>"Cuando un exploit se cierra, otro se abre si observas adecuadamente."</blockquote>
+          </div>
+
+          <div class="lang-en">
+            <p class="lead">Akamai is one of the best-known companies in the cybersecurity space, offering cloud computing, CDN, and security solutions.
+              Its security products for stopping automated traffic rely on JavaScript code executed in the client's browser to analyze inputs
+              and determine whether the visitor is human or not — all without the average user noticing.
+            </p>
+
+            <p>
+              However, Akamai's solutions — specifically its "sensor" challenge — are highly effective and have kept evolving over the last 5 years, improving
+              detection through advanced data analysis and Machine Learning, successfully stopping bot traffic while keeping the protected sites operational even under
+              heavy traffic spikes.
+            </p>
+
+            <p>
+              If Akamai serves a challenge that gets resolved in the browser to determine whether the visitor is a bot, how does this affect a bot based on
+              HTTP requests embedded inside a real browser?
+            </p>
+            <p>
+              Despite the nature of such a bot, Akamai can still tell when traffic is being partially automated, and more importantly, it can impose rate limits
+              to neutralize DDOS attacks. It's tempting to think a rate limit can be easily bypassed by simply rotating proxies, but Akamai's challenge solutions
+              are tied to both session and IP — so a simple proxy change means starting the entire process from scratch.
+            </p>
+
+            <h2>LVR: Italy's largest luxury boutique</h2>
+            <p>
+              LuisaViaRoma, better known as LVR, was Italy's largest luxury fashion boutique. Between 2021 and 2023, it carried top-tier limited sneaker and streetwear drops,
+              hosting many of the most exclusive releases from Nike, Adidas, Off-White, New Balance, and others.
+              All drops were first come, first served, at a random time on release day, with shipping available across Europe.
+            </p>
+
+            <p>
+              To keep the site running and give all users a fair shot at these releases, LVR implemented the Akamai solutions described above — but not across the entire site.
+              Protection was limited to checkout-related endpoints: add to cart, confirm purchase details, and submit payment.
+              These endpoints received heavy traffic during drops, which made Akamai's protection even stricter and more effective,
+              since landing a single successful checkout required every request to go through before Akamai imposed a rate limit and blocked access.
+            </p>
+
+            <h2>The importance of scanning the full attack surface</h2>
+            <p>
+              Although all checkout endpoints appeared to be protected by Akamai, the site offered the ability to send gifts to other customers via email.
+              Once the recipient's email was entered, the site sent a link for them to accept the gift, and the sender received another email with a link to confirm payment and shipping.
+              A seemingly harmless feature — but it exposed an alternative checkout endpoint that was not protected by Akamai.
+              By analyzing the request flow, the data sent to this endpoint, the responses received, and the links in the emails, it was possible to automate the entire checkout process
+              without ever receiving the emails, since all the tokens in the email links could be extracted from the HTTP responses of the gift-sending endpoint.
+              And most importantly, this endpoint was not protected by Akamai, making it possible to run automated checkouts without rate limits or IP blocks.
+            </p>
+
+            <p>
+              The code snippet below shows how the checkout token could be obtained from the gift-sending endpoint's HTTP response and used to complete checkout without receiving any emails:
+            </p>
+
+            <img src="../img/carbon-lvr.svg" alt="LVR bypass flow diagram" loading="lazy" />
+
+            <p>
+              Building the bypass was the mechanical part. The real value was identifying that Akamai's protection was not applied uniformly across the site.
+              Once the gift flow was mapped, it was just a matter of replaying the requests in the correct order to obtain checkout tokens without ever touching the protected endpoints.
+            </p>
+
+            <p>
+              This bypass stayed active for nearly 3 months, from July to October 2021, during which time my bot's users and I were
+              able to rack up significant success on LuisaViaRoma's drops. But word about this bypass soon got around,
+              mainly because of the order confirmation emails users were receiving, and
+              other developers were quick to copy the method, leading to the bypass being partially patched.
+            </p>
+
+            <h2>Finding a new bypass</h2>
+            <p>
+              After the success my users (and other competitors who copied the method) enjoyed, LuisaViaRoma was quick to respond, blocking
+              gift orders for new arrivals and exclusive products. But what at first seemed like a setback soon turned
+              into an opportunity.
+            </p>
+
+            <p>
+              I soon realized that just as gift orders could still be generated for certain products,
+              it was also possible to generate gifts using items from past collections, fill in all the checkout details,
+              and in the final request — the one confirming the order at the endpoint "/myarea/bag/sendagiftconfirmloggeduserandcreateorder" —
+              swap in the token from the generated gift with the details of the limited product the user actually wanted.
+            </p>
+
+            <p>
+              The rest was straightforward: hardcode a couple dozen PIDs (product IDs) from past collections into the bot's code to
+              make sure there was always something in stock that could generate a gift, and have the bot submit the orders
+              with the real PID.
+            </p>
+
+            <p>
+              As far as I know, this second method was never discovered by other developers in the nearly 2 months it stayed
+              active, until LVR's admins disabled gift-sending altogether.
+            </p>
+
+            <h2>Great module plus effective bypasses: guaranteed success</h2>
+
+            <p>
+              During the months these two bypasses were active — especially the second one, which was never copied —
+              my users saw huge success across every LVR drop and restock.
+              Thanks to the module's restock monitoring capabilities, paired with another bypass that dodged the stock cache,
+              and the Akamai checkout bypass, my users managed to grab over 90% of stock on very limited drops,
+              including restocks of several Jordan 1 Low, Mid, and High models, Adidas Yeezy Slides and Foam Runners, plus other
+              Nike collabs with Ambush, Off-White, and more.
+            </p>
+
+            <h2>What I learned</h2>
+            <p>
+              In such a fast-moving environment, where competition is fierce, it's important to observe every detail,
+              never assume anything. It's also crucial to understand how and why security systems work, not just how to evade them.
+              That's what lets you adapt and find solutions others miss — the kind that make the difference between success and failure.
+            </p>
+
+            <blockquote>"When one exploit closes, another opens if you pay close enough attention."</blockquote>
+          </div>
+        </article>
+
+        <div class="tag-list">
+          <span class="tag">reverse engineering</span>
+          <span class="tag">bots</span>
+          <span class="tag">api</span>
+          <span class="tag">redis</span>
+        </div>
+
+        <div class="author-card">
+          <div class="ph-img square" style="overflow: hidden;">
+            <img src="../img/avatar.png" alt="Avatar" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+          </div>
+          <div>
+            <h3>Jorge Marin</h3>
+            <p class="lang-es">Ingeniero de software. Escribo sobre sistemas, limitaciones y soluciones creativas.</p>
+            <p class="lang-en">Software engineer. I write about systems, constraints, and creative solutions.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div id="read-more-target"></div>
+  </main>
+
+  <footer class="pagefoot" data-od-id="footer">
+    <div class="container row-between">
+      <span>© Jorge Marin · 2026</span>
+      <span class="meta">
+        <span class="lang-inline lang-es">HTML estático · GitHub Pages</span>
+        <span class="lang-inline lang-en">Static HTML · GitHub Pages</span>
+      </span>
+    </div>
+  </footer>
+
+  <script src="../js/scripts.js"></script>
+</body>
+</html>

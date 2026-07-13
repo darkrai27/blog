@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Revolucionando la industria del sneaker botting.</title>
+  <meta name="description" content="Automatizando las acciones del navegador de forma eficiente e invisible para el usuario." />
+  <link rel="stylesheet" href="../css/styles.css" />
+  <script>
+    (function () {
+      try {
+        var theme = localStorage.getItem('reverse-log-theme');
+        if (!theme) theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        if (theme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+        var lang = localStorage.getItem('reverse-log-lang') || 'es';
+        document.documentElement.setAttribute('data-lang', lang);
+      } catch (e) {}
+    })();
+  </script>
+</head>
+<body>
+  <header class="topnav" data-od-id="topnav">
+    <div class="container topnav-inner">
+      <a href="../index.html" class="logo">Jorge Marin</a>
+      <nav>
+        <a href="../index.html">
+          <span class="lang-inline lang-es">Artículos</span>
+          <span class="lang-inline lang-en">Articles</span>
+        </a>
+      </nav>
+      <div class="topnav-tools">
+        <button class="tool-btn" id="theme-toggle" aria-pressed="false" aria-label="Cambiar a modo oscuro / Switch to dark mode">
+          <span class="lang-inline lang-es">Oscuro</span>
+          <span class="lang-inline lang-en">Dark</span>
+        </button>
+        <button class="tool-btn" id="lang-toggle" aria-label="Switch to English">
+          <span class="lang-inline lang-es">EN</span>
+          <span class="lang-inline lang-en">ES</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="content">
+    <section class="section article-header" data-od-id="article-header">
+      <div class="container-narrow">
+        <p class="eyebrow">
+          <span class="lang-inline lang-es">Bots · Reverse Engineering</span>
+          <span class="lang-inline lang-en">Bots · Reverse Engineering</span>
+        </p>
+        <h1 class="lang-es">Revolucionando la industria del sneaker botting.</h1>
+        <h1 class="lang-en">Evolving the sneaker botting industry.</h1>
+        <div class="article-meta">
+          <span class="num">16 May 2026</span>
+          <span class="sep">·</span>
+          <span class="lang-inline lang-es">8 min de lectura</span>
+          <span class="lang-inline lang-en">8 min read</span>
+          <span class="sep">·</span>
+          <!-- <span class="lang-inline lang-es">por el autor</span>
+          <span class="lang-inline lang-en">by the author</span> -->
+        </div>
+      </div>
+    </section>
+
+    <section class="section flush" data-od-id="article-body">
+      <div class="container-narrow">
+        <article class="post-content">
+          <div class="lang-es">
+            <p class="lead">Todo empezó con una simple idea: fusionar las capacidades de un bot CLI, con la simplicidad de una app embedida en el navegador.</p>
+
+            <p>En 2021, los coleccionistas de sneakers se encontraban enfrentando desafíos significativos para obtener zapatillas limitadas. La competencia se intensificaba día a día, y los métodos tradicionales de compra no eran suficientes.</p>
+            <p>Muchos utilizaban softwares de automatización que podríamos categorizar en dos grupos: bots imitiando las requests http del navegador y scripts que interactuaban con los elementos del DOM de manera automatizada.</p>
+
+            <h2>0. Distinguiendo bots y scripts</h2>
+            <p>El primer tipo de software, conocido como "bot" en la comunidad, era el más potente, más rápido y efectivo, limitado únicamente por las capacidades de los sistemas anti-bot integrados en las webs y APIs objetivo.</p>
+            
+            <p>
+              Los "scripts", sin embargo, eran todavía nuevos en aquella época, y muchos sistemas anti-bot no eran capaces de detectarlos, y mucho menos hacerlo de forma efectiva sin bloquear a usuarios reales.
+              Sin embargo estos presentaban una clara limitación: dependían de la carga del DOM, todos los elementos HTML y scripts presentes en la web, cosa que, en momentos de alta carga de los mayores retailers en Europa, suponía una clara limitación.
+            </p>
+
+            <h2>1. Creando una solución unificada</h2>
+            <p>Cuando empecé a crear mi propio bot, desconocía como detalles más "low-level" funcionaban, era consciente de qué era el TLS-fingerprinting, pero desconocía como imitar el fingerprinting de un navegador real con Python o NodeJS.</p>
+            <p>Decidí hacer algo simple, empezar por el navegador. Si las requests provenían de un navegador, muchos anti-bots no serían capaces de diferenciar mi software de un usuario real. Sólo había que asegurarse de que las requests se comportaran como las de un navegador real, usar los mismos identificadores y el mismo orden de headers (no basta con sólo el User-Agent!)</p>
+            
+            <h2>2. Embediendo la lógica en el navegador</h2>
+            <p>Afortunadamente, Chrome ya cuenta con una solución para esto: las extensiones de navegador.</p>
+            <p>Los "scripts", descritos anteriormente ya hacían uso de extensiones para automatizar las interacciones del navegador, pero ninguna de ellas era tan poderosa como un bot.</p>
+            <p>Aprovechando la api fetch de JavaScript, creé una extensión que permitía automatizar las interacciones del navegador de manera más efectiva, con control total sobre el flujo de requests dependiendo de las necesidades y de las respuestas HTTP recibidas.</p>
+
+            <h2>3. Evolucionando más allá</h2>
+            <p>Con el tiempo, muchas de estas soluciones se volvieron obsoletas, y los sistemas anti-bot evolucionaron para muchas de las técnicas que usaba para conseguir checkouts automatizados.</p>
+            <p>En cuestión de meses se volvió común tener que lidiar con WAFs avanazados, sistemas de cola, captchas, etc. 
+              Para ello, fue cuestión de tiempo implementar técnicas de bypass, como el uso de proxies rotativos, la emulación de dispositivos móviles y 
+              la integración de servicios de resolución de captchas o harvesters que permitieran resolverlos de manera manual y almacenar la respuesta para su uso posterior.
+            </p>
+            <p>La competencia también se volvió más feroz, con más jugadores entrando en el mercado y aumentando la presión sobre los sistemas de seguridad y dificultando la acción y efectividad de los bots.
+              No obstante, gracias a la experiencia adquirida, pude seguir desarrollando soluciones más avanzadas y efectivas para superar estos desafíos y mantenerme competitivo en el mercado de los sneaker bots.
+              Bypasses avanzados, endpoints alternativos para el checkout, técnicas de fingerprinting, monitorización de restocks automatizados, sincronización de tareas entre múltiples instancias de bots, etc. fueron algunas de las técnicas que implementé para mantenerme a la vanguardia en el mundo del sneaker botting.
+            </p>
+
+            <h2>Lo que aprendí</h2>
+            <p>Con el tiempo dejé de pensar en esto como una batalla que se gana de una vez. Cada bypass tiene fecha de caducidad: en cuanto el anti-bot detecta el patrón, hay que volver a empezar. Así que empecé a verlo más como un diálogo constante con el equipo de seguridad del otro lado —cada defensa nueva me decía algo sobre cómo pensaban, y cada respuesta mía les decía algo sobre mí. La ventaja real nunca estuvo en la técnica concreta, sino en la velocidad para leer esa conversación y adaptarme antes que ellos.</p>
+
+          </div>
+
+          <div class="lang-en">
+            <p class="lead">It all started with a simple idea: merge the capabilities of a CLI bot with the simplicity of an app embedded in the browser.</p>
+
+            <p>In 2021, sneaker collectors were facing significant challenges getting hold of limited releases. Competition intensified by the day, and traditional purchasing methods weren't enough.</p>
+            <p>Many people used automation software that could be split into two categories: bots that mimicked the browser's HTTP requests, and scripts that interacted with the page's DOM elements in an automated way.</p>
+
+            <h2>0. Distinguishing bots from scripts</h2>
+            <p>The first type of software, known in the community as a "bot", was the most powerful, fastest, and most effective, limited only by the anti-bot systems built into the target sites and APIs.</p>
+
+            <p>
+              "Scripts", however, were still fairly new at the time, and many anti-bot systems weren't able to detect them — let alone do so effectively without also blocking real users.
+              Even so, they had a clear limitation: they depended on the DOM loading, meaning every HTML element and script present on the page, which during high-traffic moments at the biggest European retailers was a real bottleneck.
+            </p>
+
+            <h2>1. Building a unified solution</h2>
+            <p>When I started building my own bot, I didn't know how the more "low-level" details worked. I knew what TLS fingerprinting was, but I had no idea how to mimic a real browser's fingerprint from Python or Node.js.</p>
+            <p>I decided to do something simple: start from the browser itself. If the requests came from a real browser, many anti-bots wouldn't be able to tell my software apart from a genuine user. I just had to make sure the requests behaved like a real browser's — using the same identifiers and the same header order (the User-Agent alone isn't enough!).</p>
+
+            <h2>2. Embedding the logic in the browser</h2>
+            <p>Fortunately, Chrome already had a solution for this: browser extensions.</p>
+            <p>The "scripts" described earlier already used extensions to automate browser interactions, but none of them were as powerful as a bot.</p>
+            <p>Taking advantage of JavaScript's fetch API, I built an extension that automated browser interactions far more effectively, with full control over the flow of requests depending on the needs of each step and the HTTP responses received.</p>
+
+            <h2>3. Evolving beyond</h2>
+            <p>Over time, many of these solutions became obsolete, and anti-bot systems evolved past many of the techniques I used to land automated checkouts.</p>
+            <p>Within a matter of months, it became common to deal with advanced WAFs, queue systems, captchas, and more.
+              Handling that meant it was only a matter of time before I implemented bypass techniques, such as rotating proxies, mobile device emulation, and
+              integrating captcha-solving services, or harvesters that let people solve them manually and store the response for later use.
+            </p>
+            <p>Competition also got fiercer, with more players entering the market and putting more pressure on security systems, which made it harder for bots to act effectively.
+              Even so, thanks to the experience I'd built up, I kept developing more advanced and effective solutions to overcome these challenges and stay competitive in the sneaker bot market.
+              Advanced bypasses, alternative checkout endpoints, fingerprinting techniques, automated restock monitoring, task synchronization across multiple bot instances, and more were some of the techniques I implemented to stay ahead in the world of sneaker botting.
+            </p>
+
+            <h2>What I learned</h2>
+            <p>Over time I stopped thinking of this as a battle you win once. Every bypass has an expiration date: the moment the anti-bot system spots the pattern, you're back to square one. So I started seeing it more as an ongoing dialogue with the security team on the other side — every new defense told me something about how they thought, and every response of mine told them something about me. The real edge was never in any single technique; it was in how fast I could read that conversation and adapt before they did.</p>
+
+          </div>
+        </article>
+
+        <div class="tag-list">
+          <span class="tag">reverse engineering</span>
+          <span class="tag">bots</span>
+          <span class="tag">api</span>
+          <span class="tag">redis</span>
+        </div>
+
+        <div class="author-card">
+          <div class="ph-img square" style="overflow: hidden;">
+            <img src="../img/avatar.png" alt="Avatar" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+          </div>
+          <div>
+            <h3>Jorge Marin</h3>
+            <p class="lang-es">Ingeniero de software. Escribo sobre sistemas, limitaciones y soluciones creativas.</p>
+            <p class="lang-en">Software engineer. I write about systems, constraints, and creative solutions.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div id="read-more-target"></div>
+  </main>
+
+  <footer class="pagefoot" data-od-id="footer">
+    <div class="container row-between">
+      <span>© Jorge Marin · 2026</span>
+      <span class="meta">
+        <span class="lang-inline lang-es">HTML estático · GitHub Pages</span>
+        <span class="lang-inline lang-en">Static HTML · GitHub Pages</span>
+      </span>
+    </div>
+  </footer>
+
+  <script src="../js/scripts.js"></script>
+</body>
+</html>

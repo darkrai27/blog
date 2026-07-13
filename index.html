@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Jorge Marin — Engineering notes</title>
+  <meta name="description" content="Personal blog about engineering, reverse engineering, bots and creative workarounds." />
+  <link rel="stylesheet" href="css/styles.css" />
+  <script>
+    (function () {
+      try {
+        var theme = localStorage.getItem('reverse-log-theme');
+        if (!theme) theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        if (theme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+        var lang = localStorage.getItem('reverse-log-lang') || 'es';
+        document.documentElement.setAttribute('data-lang', lang);
+      } catch (e) {}
+    })();
+  </script>
+</head>
+<body>
+  <header class="topnav" data-od-id="topnav">
+    <div class="container topnav-inner">
+      <a href="index.html" class="logo">Jorge Marin</a>
+      <nav>
+        <a href="index.html" aria-current="page">
+          <span class="lang-inline lang-es">Artículos</span>
+          <span class="lang-inline lang-en">Articles</span>
+        </a>
+      </nav>
+      <div class="topnav-tools">
+        <button class="tool-btn" id="theme-toggle" aria-pressed="false" aria-label="Cambiar a modo oscuro / Switch to dark mode">
+          <span class="lang-inline lang-es">Oscuro</span>
+          <span class="lang-inline lang-en">Dark</span>
+        </button>
+        <button class="tool-btn" id="lang-toggle" aria-label="Switch to English">
+          <span class="lang-inline lang-es">EN</span>
+          <span class="lang-inline lang-en">ES</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="content">
+    <section class="section hero" data-od-id="hero">
+      <div class="container hero-center hero-wide">
+        <p class="eyebrow">Ingeniería · Reverse · Bots</p>
+        <h1 class="lang-es">Ingeniería inversa, bots y los detalles que nadie documenta.</h1>
+        <h1 class="lang-en">Reverse engineering, bots, and the details nobody documents.</h1>
+        <p class="lead lang-es">Escrito por un ingeniero. Historias reales sobre bots, rate limits, WAFs y soluciones que no encontrarás en Stack Overflow.</p>
+        <p class="lead lang-en">Written by an engineer. Real stories about bots, rate limits, WAFs, and solutions you won't find on Stack Overflow.</p>
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="articles/LVR-bypass.html">
+            <span class="lang-inline lang-es">Leer último artículo</span>
+            <span class="lang-inline lang-en">Read latest article</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" data-od-id="recent-posts">
+      <div class="container">
+        <div class="row-between" style="margin-bottom: 32px;">
+          <h2 class="lang-es">Artículos recientes</h2>
+          <h2 class="lang-en">Recent articles</h2>
+          <span class="meta">2026</span>
+        </div>
+        <div id="article-list-target"></div>
+      </div>
+    </section>
+
+
+    <section class="section" data-od-id="cta-strip" style="text-align: center;">
+      <div class="container" style="max-width: 600px;">
+        <h2 class="lang-es">Publicado en GitHub Pages.</h2>
+        <h2 class="lang-en">Published on GitHub Pages.</h2>
+        <p class="lead lang-es" style="margin: 16px auto 32px;">HTML, CSS y un par de historias. Sin trackers, sin anuncios, sin suscripciones.</p>
+        <p class="lead lang-en" style="margin: 16px auto 32px;">HTML, CSS, and a few stories. No trackers, no ads, no subscriptions.</p>
+        <a class="btn btn-secondary" href="https://github.com/darkrai27" target="_blank" rel="noopener">
+          <span class="lang-inline lang-es">Ver el repo</span>
+          <span class="lang-inline lang-en">View repo</span>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="pagefoot" data-od-id="footer">
+    <div class="container row-between">
+      <span>© Jorge Marin · 2026</span>
+      <span class="meta">
+        <span class="lang-inline lang-es">HTML estático · GitHub Pages</span>
+        <span class="lang-inline lang-en">Static HTML · GitHub Pages</span>
+      </span>
+    </div>
+  </footer>
+
+  <script src="js/scripts.js"></script>
+</body>
+</html>

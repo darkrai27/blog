@@ -1,0 +1,26 @@
+{
+  "kind": "critique-panel",
+  "score": 5,
+  "axes": {
+    "clarity": {
+      "score": 5,
+      "notes": "Hero más ancho: headline cae en menos líneas, más fácil de escanear."
+    },
+    "hierarchy": {
+      "score": 5,
+      "notes": "H1 sigue dominando; medida más amplia reduce verticalidad sin perder peso."
+    },
+    "typography": {
+      "score": 5,
+      "notes": "Escala h1 ajustada en móvil para evitar torres de texto."
+    },
+    "motion": {
+      "score": 4,
+      "notes": "Sin cambios de animación."
+    },
+    "brand": {
+      "score": 5,
+      "notes": "Modern Minimal intacto; acento y tipografía sin cambios."
+    }
+  }
+}

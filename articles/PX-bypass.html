@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Eludiendo Perimeter-X · Jorge Marin</title>
+  <meta name="description" content="Explorando técnicas para eludir la protección Perimeter-X en dos de los mayores retailers Europeos." />
+  <link rel="stylesheet" href="../css/styles.css" />
+  <script>
+    (function () {
+      try {
+        var theme = localStorage.getItem('reverse-log-theme');
+        if (!theme) theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        if (theme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+        var lang = localStorage.getItem('reverse-log-lang') || 'es';
+        document.documentElement.setAttribute('data-lang', lang);
+      } catch (e) {}
+    })();
+  </script>
+</head>
+<body>
+  <header class="topnav" data-od-id="topnav">
+    <div class="container topnav-inner">
+      <a href="../index.html" class="logo">Jorge Marin</a>
+      <nav>
+        <a href="../index.html">
+          <span class="lang-inline lang-es">Artículos</span>
+          <span class="lang-inline lang-en">Articles</span>
+        </a>
+      </nav>
+      <div class="topnav-tools">
+        <button class="tool-btn" id="theme-toggle" aria-pressed="false" aria-label="Cambiar a modo oscuro / Switch to dark mode">
+          <span class="lang-inline lang-es">Oscuro</span>
+          <span class="lang-inline lang-en">Dark</span>
+        </button>
+        <button class="tool-btn" id="lang-toggle" aria-label="Switch to English">
+          <span class="lang-inline lang-es">EN</span>
+          <span class="lang-inline lang-en">ES</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="content">
+    <section class="section article-header" data-od-id="article-header">
+      <div class="container-narrow">
+        <p class="eyebrow">
+          <span class="lang-inline lang-es">WAF · Bypass</span>
+          <span class="lang-inline lang-en">WAF · Bypass</span>
+        </p>
+        <h1 class="lang-es">Eludiendo Perimeter-X y su "Press & Hold" Captcha</h1>
+        <h1 class="lang-en">Bypassing Perimeter-X's "Press & Hold" captcha</h1>
+        <div class="article-meta">
+          <span class="num">6 Jun 2026</span>
+          <span class="sep">·</span>
+          <span class="lang-inline lang-es">3 min de lectura</span>
+          <span class="lang-inline lang-en">3 min read</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section flush" data-od-id="article-body">
+      <div class="container-narrow">
+        <article class="post-content">
+          <div class="lang-es">
+            <p class="lead">Perimeter-X (ahora HUMAN) es un WAF (web application firewall) muy conocido por ser altamente invasivo,
+            usando técnicas de fingerprinting basadas el hardware del usuario (llegando a bloquear a todos los usuarios de ciertas tarjetas gráficas muy comunes como la GTX 1060 durante algunos lanzamientos)
+            y debido a su famoso "Pulsa y Mantén" captcha
+            que podía llegar a requerir varias soluciones hasta generar las cookies que te permitieran el acceso a la web o enpoint objetivo.
+            Durante un lanzamiento, el tiempo necesario para resolver este captcha puede marcar la diferencia entre hacerte con 3 pares de zapatillas limitadas, o ninguna.
+            </p>
+
+            <div class="ph-img wide" style="overflow: hidden; margin: 24px 0;">
+              <img src="../img/px-captcha.png" alt="Captcha Press & Hold de Perimeter-X" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+            </div>
+
+            <p>Snipes y Solebox son dos conocidos retailers tier 1 que operan en toda Europa, contando siempre con todos los lanzamientos de marcas como Nike y Adidas, las más relevantes en 2021.
+            Ambas webs estaban protegidas por Perimeter-X y su protección se fue volviendo más y más estricta con el paso de los meses.
+            Inicialmente, evitar los endpoints protegidos en el momento del lanzamiento, bastaba para asegurar varios checkouts. Por ejemplo, usar los conocidos "size PIDs", scrapeados previamente, que automáticamente añadían a la cesta
+            la talla exacta del modelo deseado en el momento del lanzamiento para evitar acceder a la página del producto protegida, o usar el endpoint de la wishlist, con un payload modificado para añadir el artículo al carrito.       
+            </p>
+
+            <p>Sin embargo, uno de los métodos más efectivos para evadir la protección de Perimeter-X era el URL encoding de las rutas o parámetros.
+            Un simple ejemplo de esto es hacer requests al endpoint de añadir al carrito:
+
+            <code>/add-product?format=ajax</code>
+
+            Codificando el <code>?</code> del URL query:
+
+            <code>/add-product%3Fformat%3Dajax%26.ico</code>
+
+            Esto provocaba que el backend de las Snipes y Solebox interpretasen el query adecuadamente (sólo nos interesa el <code>format=ajax</code>),
+            pero PX interpreta todo como el path del recurso, creyendo que el navegador solicita un recurso <code>.ico</code>, que suelen estar desprotegidos
+            por este tipo de soluciones anti-bots
+            </p>
+           
+            <blockquote>"No es un bypass si no entiendes primero por qué funciona."</blockquote>
+          </div>
+
+          <div class="lang-en">
+            <p class="lead">Perimeter-X (now HUMAN) is a WAF (web application firewall) well known for being highly invasive,
+            using hardware-based user fingerprinting techniques (going as far as blocking all users of certain very common graphics cards like the GTX 1060 during some releases)
+            and for its famous "Press & Hold" captcha
+            that could require several solutions before generating the cookies that grant access to the target website or endpoint.
+            During a drop, the time that takes to solve this captcha can make the difference between getting 3 pairs of sneakers, or none.
+            </p>
+
+            <div class="ph-img wide" style="overflow: hidden; margin: 24px 0;">
+              <img src="../img/px-captcha.png" alt="Perimeter-X Press & Hold captcha" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+            </div>
+
+            <p>Snipes and Solebox are two well-known tier 1 retailers operating across Europe, always carrying all releases from brands like Nike and Adidas, the most relevant in 2021.
+            Both websites were protected by Perimeter-X and their protection became stricter over the months.
+            Initially, avoiding protected endpoints at launch time was enough to secure several checkouts. For example, using the well-known "size PIDs", scraped beforehand, which automatically added
+            the exact size of the desired model to the cart at launch time to avoid accessing the protected product page, or using the wishlist endpoint with a modified payload to add the item to the cart.
+            </p>
+
+            <p>However, one of the most effective methods to evade Perimeter-X protection was URL encoding of routes or parameters.
+            A simple example is making requests to the add-to-cart endpoint:
+
+            <code>/add-product?format=ajax</code>
+
+            Encoding the <code>?</code> in the URL query:
+
+            <code>/add-product%3Fformat%3Dajax%26.ico</code>
+
+            This caused the Snipes and Solebox backends to interpret the query correctly (we only care about <code>format=ajax</code>),
+            but PX interprets everything as the resource path, believing the browser is requesting an <code>.ico</code> resource, which are usually left unprotected
+            by this type of anti-bot solution.
+            </p>
+
+            <blockquote>"It's not a bypass if you don't first understand why it works."</blockquote>
+          </div>
+        </article>
+
+        <div class="tag-list">
+          <span class="tag">perimeter-x</span>
+          <span class="tag">waf</span>
+          <span class="tag">bypass</span>
+          <span class="tag">url encoding</span>
+        </div>
+
+        <div class="author-card">
+          <div class="ph-img square" style="overflow: hidden;">
+            <img src="../img/avatar.png" alt="Avatar" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+          </div>
+          <div>
+            <h3>Jorge Marin</h3>
+            <p class="lang-es">Ingeniero de software. Escribo sobre sistemas, limitaciones y soluciones creativas.</p>
+            <p class="lang-en">Software engineer. I write about systems, constraints, and creative solutions.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div id="read-more-target"></div>
+  </main>
+
+  <footer class="pagefoot" data-od-id="footer">
+    <div class="container row-between">
+      <span>© Jorge Marin · 2026</span>
+      <span class="meta">
+        <span class="lang-inline lang-es">HTML estático · GitHub Pages</span>
+        <span class="lang-inline lang-en">Static HTML · GitHub Pages</span>
+      </span>
+    </div>
+  </footer>
+
+  <script src="../js/scripts.js"></script>
+</body>
+</html>
